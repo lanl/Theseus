@@ -30,7 +30,7 @@ After R is installed, run the script **theseus.R**.
 
 ## Data Details
 
-There are 7 data products in **data.RDS**.
+There are 5 data products in **data_illustration.RDS**.
 
 Xobs is an 11 column data frame:
 - obs_id: is a unique label for the binned direct event data, from 1 to the number of rows of Xobs
@@ -55,6 +55,15 @@ Xpsf is a nrow(Xobs) by nrow(Xpix) sparse matrix where each entry is non-neagati
 
 KK is an nrow(Xpix) by nrow(Xpix) sparse matrix where each entry is non-negative and each row sums to 1. It is used to relate the unblurred sky map to the blurred sky map
 
+ibex_palette is a four column data frame:
+- red: red numeric value
+- green: green numeric value
+- blue: blue numeric value
+- hex: hex value
+
+
+There are 2 data products in **data_results.RDS**.
+
 ibex_data is an 11 column data frame:
 - esa: is the energy step for the IBEX data. Only ESA 4 is provided
 - map: is the 6-month map id (e.g., "2013A"). Only "A" maps are provided
@@ -75,12 +84,6 @@ real_sky_maps is an 8 column data frame:
 - method: the sky map estimation method. Either "theseus" of "isoc"
 - quantity: the type of response, either "mean" or "ci" for 95% confidence interval width
 - value: either the ENA rate (ENAs/sec when q
-
-ibex_palette is a four column data frame:
-- red: red numeric value
-- green: green numeric value
-- blue: blue numeric value
-- hex: hex value
 
   
 ## Attribution
