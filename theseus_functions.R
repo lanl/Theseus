@@ -1,5 +1,5 @@
 ## Dave Osthus
-## 3-14-23
+## 7-27-23
 ## Functions for the minimum working example for the 
 ## manuscript "Towards Improved Heliosphere Sky Map Estimation with Theseus"
 

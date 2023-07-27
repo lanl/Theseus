@@ -1,6 +1,7 @@
 ## Dave Osthus
 ## 7-27-23
 ## Minimum working example for the manuscript "Towards Improved Heliosphere Sky Map Estimation with Theseus"
+## This script will reproduce Figures 2, 3, 4, 6, and 7
 
 # © 2023. Triad National Security, LLC. All rights reserved.
 # This program was produced under U.S. Government contract 89233218CNA000001 for Los Alamos
@@ -30,8 +31,6 @@ theme_set(theme_bw())
 
 
 ###########################
-## define paths
-## **CHANGE inputpath TO WHERE MWE IS LOCATED**
 # setwd("/Users/dosthus/Documents/ibex/theseus/manuscript/Technometrics/MWE/")
 
 ###########################
@@ -47,7 +46,7 @@ new_360[new_360<0.01]=new_360[new_360<0.01]+360
 
 ###########################
 ## load the data
-data <- readRDS("data.RDS")
+data <- readRDS("data_illustration.RDS")
 
 ## binned direct event data
 Xobs <- data$Xobs

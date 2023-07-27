@@ -29,10 +29,9 @@ library(ggpubr)
 library(glmnet)
 theme_set(theme_bw())
 
+
 ###########################
-## define paths
-## **CHANGE inputpath TO WHERE MWE IS LOCATED**
-# setwd("/Users/dosthus/Documents/ibex/theseus/manuscript/Technometrics/MWE/")
+setwd("/Users/dosthus/Documents/ibex/theseus/manuscript/Technometrics/MWE/")
 
 ## define terms for proper coordinate plotting
 noselongitude <- 265
@@ -42,14 +41,11 @@ new_360 = orig_360-center+0.01
 new_360[new_360<0.01]=new_360[new_360<0.01]+360
 
 ###########################
-## load the data
-data <- readRDS("data.RDS")
-
 ## binned direct event data
-df <- data$real_sky_maps
+df <- readRDS("data_results.RDS")$real_sky_maps
 
 ## ibex color palette
-ibex_palette <- data$ibex_palette
+ibex_palette <- readRDS("data_illustration.RDS")$ibex_palette
 
 
 ###########################
