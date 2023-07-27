@@ -30,7 +30,7 @@ After R is installed, run the script **theseus.R**.
 
 ## Data Details
 
-There are 6 data products in **data.RDS**.
+There are 7 data products in **data.RDS**.
 
 Xobs is an 11 column data frame:
 - obs_id: is a unique label for the binned direct event data, from 1 to the number of rows of Xobs
@@ -55,7 +55,7 @@ Xpsf is a nrow(Xobs) by nrow(Xpix) sparse matrix where each entry is non-neagati
 
 KK is an nrow(Xpix) by nrow(Xpix) sparse matrix where each entry is non-negative and each row sums to 1. It is used to relate the unblurred sky map to the blurred sky map
 
-ibexData is an 11 column data frame:
+ibex_data is an 11 column data frame:
 - esa: is the energy step for the IBEX data. Only ESA 4 is provided
 - map: is the 6-month map id (e.g., "2013A"). Only "A" maps are provided
 - ecliptic_lon: is the ecliptic longitude (between 0 and 360)
@@ -66,16 +66,23 @@ ibexData is an 11 column data frame:
 - time: is the exposure time (in seconds)
 - background: is the background rate (background particles per second)
 
-realSkyMaps is an 8 column data frame:
+real_sky_maps is an 8 column data frame:
 - esa: is the energy step for the IBEX data. Only ESA 4 is provided
 - map: is the 6-month map id (e.g., "2013A"). Only "A" maps are provided
 - ecliptic_lon: is the ecliptic longitude (between 0 and 360)
 - ecliptic_lat: is the ecliptic latitude (between -90 and 90)
 - ecliptic_lon_center: is the ecliiptic longitude in "nose centered" frame and is used for plotting purposes
 - method: the sky map estimation method. Either "theseus" of "isoc"
-- quantity: the type of response
+- quantity: the type of response, either "mean" or "ci" for 95% confidence interval width
+- value: either the ENA rate (ENAs/sec when q
 
+ibex_palette is a four column data frame:
+- red: red numeric value
+- green: green numeric value
+- blue: blue numeric value
+- hex: hex value
 
+  
 ## Attribution
 
 If you use the Theseus in your research work, please cite the following paper:
