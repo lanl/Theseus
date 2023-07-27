@@ -34,9 +34,9 @@ After R is installed, run the script **theseus.R**.
 
 ## Data Details
 
-# data_illustration.RDS
+### data_illustration.RDS
 
-There are 5 data products in **data_illustration.RDS**.
+There are **5** data products in **data_illustration.RDS**.
 
 Xobs is an 11 column data frame:
 - obs_id: is a unique label for the binned direct event data, from 1 to the number of rows of Xobs
@@ -67,9 +67,9 @@ ibex_palette is a four column data frame:
 - blue: blue numeric value
 - hex: hex value
 
-# data_results.RDS 
+### data_results.RDS 
 
-There are 2 data products in **data_results.RDS**.
+There are **2** data products in **data_results.RDS**.
 
 ibex_data is an 11 column data frame:
 - esa: is the energy step for the IBEX data. Only ESA 4 is provided
