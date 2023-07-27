@@ -34,6 +34,8 @@ After R is installed, run the script **theseus.R**.
 
 ## Data Details
 
+# data_illustration.RDS
+
 There are 5 data products in **data_illustration.RDS**.
 
 Xobs is an 11 column data frame:
@@ -65,6 +67,7 @@ ibex_palette is a four column data frame:
 - blue: blue numeric value
 - hex: hex value
 
+# data_results.RDS 
 
 There are 2 data products in **data_results.RDS**.
 
