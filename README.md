@@ -22,7 +22,9 @@ Installation should take less than 15 minutes on a normal desktop computer.
 
 A reduced data set is provided, named **data_illustration.RDS**. This example code will reproduce Figures 2, 3, 4, 6, and 7 of the manuscript, "Towards Improved Heliosphere Sky Map Estimation with Theseus". The R code to produce the figures is **theseus_illustration.R** and will source in the functions found within **theseus_functions.R**. This should only take 1-2 minutes to run. 
 
-The binned direct event data for the ESA 4 "A" maps along with the Theseus and ISOC sky map estimates are provided in **data_results.RDS**. The code to reproduce Figures 13 and 14 of the manuscript is **theseus_results.R** Anyone wishing to use the binned direct event data for *space science* (not statistical methodological development) should contact the LANL IBEX team first (email dreisenfeld@lanl.gov).
+The binned direct event data for the ESA 4 "A" maps along with the Theseus and ISOC sky map estimates are provided in **data_results.RDS**. The code to reproduce Figures 13 and 14 of the manuscript is **theseus_results.R** 
+
+NOTE: Anyone wishing to use the binned direct event data for *space science* (not statistical methodological development) should contact the LANL IBEX team first (email dreisenfeld@lanl.gov).
 
 
 ## Instructions for use
