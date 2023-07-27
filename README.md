@@ -65,6 +65,7 @@ ibex_palette is a four column data frame:
 There are 2 data products in **data_results.RDS**.
 
 ibex_data is an 11 column data frame:
+NOTE: anyone wishing to use the binned direct event data for space science (not statistical methodological development) space science should contact the LANL IBEX team first (dreisenfeld@lanl.gov)
 - esa: is the energy step for the IBEX data. Only ESA 4 is provided
 - map: is the 6-month map id (e.g., "2013A"). Only "A" maps are provided
 - ecliptic_lon: is the ecliptic longitude (between 0 and 360)
