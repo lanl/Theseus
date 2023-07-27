@@ -1,5 +1,5 @@
 # Theseus
-Minimum working example for sky map estimation method Theseus
+Minimum working example for the sky map estimation method Theseus
 ---
 ## Introduction
 
