@@ -38,7 +38,7 @@ After R is installed, run the script **theseus.R**.
 
 There are **5** data products in **data_illustration.RDS**.
 
-Xobs is an 11 column data frame:
+**Xobs** is an 11 column data frame:
 - obs_id: is a unique label for the binned direct event data, from 1 to the number of rows of Xobs
 - ecliptic_lon: is the ecliptic longitude (between 0 and 360)
 - ecliptic_lat: is the ecliptic latitude (between -90 and 90)
@@ -49,7 +49,7 @@ Xobs is an 11 column data frame:
 - time: is the exposure time (in seconds)
 - background: is the background rate (background particles per second)
 
-Xpix is an 8 column data frame:
+**Xpix** is an 8 column data frame:
 - pix_id: is a unique label for each pixel, from 1 to the number of rows of Xpix (for a 2 degree map, that's 16,200)
 - ecliptic_lon: is the ecliptic longitude (between 0 and 360)
 - ecliptic_lat: is the ecliptic latitude (between -90 and 90)
@@ -57,11 +57,11 @@ Xpix is an 8 column data frame:
 - x, y, and z: are the sperical coordinates for the ecliptic longitude and latitude and are used for PPR and GAM regression
 - wt_pix: is proportional to the size of the pixel (area on a unit sphere) where larger pixels are near ecliptic_latitude 0 and smaller pixels are near ecliptic latitudes -90 and 90
 
-Xpsf is a nrow(Xobs) by nrow(Xpix) sparse matrix where each entry is non-neagative and each row sums to 1. It is used to relate the unblurred sky map to the blurred binned direct events
+**Xpsf** is a nrow(Xobs) by nrow(Xpix) sparse matrix where each entry is non-neagative and each row sums to 1. It is used to relate the unblurred sky map to the blurred binned direct events
 
-KK is an nrow(Xpix) by nrow(Xpix) sparse matrix where each entry is non-negative and each row sums to 1. It is used to relate the unblurred sky map to the blurred sky map
+**KK** is an nrow(Xpix) by nrow(Xpix) sparse matrix where each entry is non-negative and each row sums to 1. It is used to relate the unblurred sky map to the blurred sky map
 
-ibex_palette is a four column data frame:
+**ibex_palette** is a 4 column data frame:
 - red: red numeric value
 - green: green numeric value
 - blue: blue numeric value
@@ -71,7 +71,7 @@ ibex_palette is a four column data frame:
 
 There are **2** data products in **data_results.RDS**.
 
-ibex_data is an 11 column data frame:
+**ibex_data** is an 11 column data frame:
 - esa: is the energy step for the IBEX data. Only ESA 4 is provided
 - map: is the 6-month map id (e.g., "2013A"). Only "A" maps are provided
 - ecliptic_lon: is the ecliptic longitude (between 0 and 360)
@@ -82,7 +82,7 @@ ibex_data is an 11 column data frame:
 - time: is the exposure time (in seconds)
 - background: is the background rate (background particles per second)
 
-real_sky_maps is an 8 column data frame:
+**real_sky_maps** is an 8 column data frame:
 - esa: is the energy step for the IBEX data. Only ESA 4 is provided
 - map: is the 6-month map id (e.g., "2013A"). Only "A" maps are provided
 - ecliptic_lon: is the ecliptic longitude (between 0 and 360)
