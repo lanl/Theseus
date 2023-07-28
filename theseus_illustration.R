@@ -250,13 +250,13 @@ fig2b <- ggpubr::ggarrange(grid.rect(gp=gpar(col="white")),
                            grid.rect(gp=gpar(col="white")),ncol=1,legend="bottom", common.legend=T, heights = c(1,4,1))
 
 
-## Figure 2
-grid.arrange(fig2a, fig2b,  widths=c(4,1.25), nrow=1)
+## Save Figure 2
+fig2 <- arrangeGrob(fig2a, fig2b,  widths=c(4,1.25), nrow=1)
+print("Save Fig 2")
+ggsave(filename = "fig2.pdf", plot = fig2, width = 16, height = 6)           
              
              
              
-             
-
 
 
 ############################################################################################################
@@ -308,8 +308,15 @@ if(class(fitgam)[1] == "try-error"){
     if(class(fitgamtemp)[1] != "try-error"){
       cnt <- cnt + 1
       print(cnt)
-      llmm <- plot.gam(fitgamtemp, pages=1, plot=F)
-      # dev.off()
+      
+      ## extract fits
+      llmm <- {
+        pdf(NULL)
+        res <- plot(fitgam, pages=1)
+        invisible(dev.off())
+        res
+      }
+      
       estXobsa <- estXobsa + (as.numeric(fitgamtemp$coefficients[1]) + approx(x = llmm[[1]]$x, y=llmm[[1]]$fit, xout = tempgamdf$cov)$y)
       estXpixa <- estXpixa + (as.numeric(fitgamtemp$coefficients[1]) + approx(x = llmm[[1]]$x, y=llmm[[1]]$fit, xout = pmin(max(tempgamdf$cov),pmax(min(tempgamdf$cov),Xpixa[,paste0(stage1componentsdf$scenarioname[jj],"_combined")])), rule=2)$y)
     }
@@ -340,9 +347,13 @@ if(class(fitgam)[1] == "try-error"){
                 family=quasipoisson(link="identity"),
                 gamma=1.4)
   
-  ## save image
-  llmm <- plot.gam(fitgam,pages=1,plot=F)
-  # dev.off()
+  ## extract fits
+  llmm <- {
+    pdf(NULL)
+    res <- plot(fitgam, pages=1)
+    invisible(dev.off())
+    res
+  }
   
   ## make blurred fit to observations
   Xobsa$init_step1_estimated_blurred_map <- pmax(0, as.numeric(fitgam$coefficients[1]) + 
@@ -489,10 +500,11 @@ if(class(fitgam)[1] == "try-error"){
                              xlab("Longitude"),
                            grid.rect(gp=gpar(col="white")),ncol=1, heights=c(1,4,1))
   
-  ## Figure 3
+  ## Save Figure 3
   ## Note: This may not exactly match Fig 3.
-  grid.arrange(arrangeGrob(fig3a, fig3b, nrow=1, widths = c(4, 1.25)))
-
+  fig3 <- arrangeGrob(fig3a, fig3b, nrow=1, widths = c(4, 1.25))
+  print("Save Fig 3")
+  ggsave("fig3.pdf", plot=fig3, width=16, height=6)
 }
 
 
@@ -543,9 +555,14 @@ if(class(fitgam2)[1] == "try-error"){
   Xobsa$step1_estimated_blurred_map <- Xobsa$init_step1_estimated_blurred_map
   Xpixa$step1_estimated_blurred_map <- Xpixa$init_step1_estimated_blurred_map
 }else{
-  ## save image
-  llmm2 <- plot.gam(fitgam2,pages=1,plot=F)
-  # dev.off()
+  ## extract fits
+  # llmm2 <- plot.gam(fitgam2,pages=1,plot=F)
+  llmm2 <- {
+    pdf(NULL)
+    res <- plot(fitgam2)
+    invisible(dev.off())
+    res
+  }
   
   ## make blurred fit to observations
   Xobsa$step1_estimated_blurred_map <- pmax(0, as.numeric(fitgam2$coefficients[1]) + 
@@ -569,46 +586,49 @@ if(class(fitgam2)[1] == "try-error"){
   step3breaksmax <- round(step3max - .01, 2)
   
   
-  ## Figure 4
+  ## Save Figure 4
   ## Note: This may not exactly match Fig 3.
-  grid.arrange(
-    ggplot(data=Xpixa)+
-      geom_raster(aes(x = ecliptic_lon_center, y = ecliptic_lat, fill  = step1_estimated_blurred_map_int + step1_estimated_blurred_map_mainmap))+
-      scale_fill_gradientn(colors=ibex_palette$hex[-c(1,nrow(ibex_palette))], name="ENAs/sec", limits = c(step3min,step3max), breaks=c(step3breaksmin, step3breaksmid, step3breaksmax))+
-      theme(legend.position="bottom",
-            plot.title = element_text(hjust = 0.5))+
-      scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
-      scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
-      ggtitle("Initial Blurred Sky Map Component")+
-      xlab("Longitude")+
-      ylab("Latitude"),
-    ggplot(data=Xpixa)+
-      geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=step1_estimated_blurred_map_residadj))+
-      scale_fill_gradient2(name="",
-                           breaks = c(round(.95*min(Xpixa$step1_estimated_blurred_map_residadj),3),0,
-                                      round(.95*max(Xpixa$step1_estimated_blurred_map_residadj),3)),
-                           limits = c(1.1*min(Xpixa$step1_estimated_blurred_map_residadj),
-                                      1.1*max(Xpixa$step1_estimated_blurred_map_residadj)))+
-      theme(legend.position="bottom",
-            plot.title = element_text(hjust = 0.5))+
-      scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
-      scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
-      ggtitle("Residual Adjustment Component")+
-      xlab("Longitude")+
-      ylab("Latitude"),
-    ggplot(data=Xpixa)+
-      geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=step1_estimated_blurred_map))+
-      scale_fill_gradientn(colors=ibex_palette$hex[-c(1,nrow(ibex_palette))],
-                           name="ENAs/sec",
-                           limits = c(step3min,step3max),
-                           breaks=c(step3breaksmin, step3breaksmid, step3breaksmax))+
-      theme(legend.position="bottom",
-            plot.title = element_text(hjust = 0.5))+
-      scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
-      scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
-      ggtitle("Residual-Adjusted Blurred Sky Map")+
-      xlab("Longitude")+
-      ylab("Latitude"),nrow=1)
+  fig4 <- arrangeGrob(
+            ggplot(data=Xpixa)+
+              geom_raster(aes(x = ecliptic_lon_center, y = ecliptic_lat, fill  = step1_estimated_blurred_map_int + step1_estimated_blurred_map_mainmap))+
+              scale_fill_gradientn(colors=ibex_palette$hex[-c(1,nrow(ibex_palette))], name="ENAs/sec", limits = c(step3min,step3max), breaks=c(step3breaksmin, step3breaksmid, step3breaksmax))+
+              theme(legend.position="bottom",
+                    plot.title = element_text(hjust = 0.5))+
+              scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
+              scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
+              ggtitle("Initial Blurred Sky Map Component")+
+              xlab("Longitude")+
+              ylab("Latitude"),
+            ggplot(data=Xpixa)+
+              geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=step1_estimated_blurred_map_residadj))+
+              scale_fill_gradient2(name="",
+                                   breaks = c(round(.95*min(Xpixa$step1_estimated_blurred_map_residadj),3),0,
+                                              round(.95*max(Xpixa$step1_estimated_blurred_map_residadj),3)),
+                                   limits = c(1.1*min(Xpixa$step1_estimated_blurred_map_residadj),
+                                              1.1*max(Xpixa$step1_estimated_blurred_map_residadj)))+
+              theme(legend.position="bottom",
+                    plot.title = element_text(hjust = 0.5))+
+              scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
+              scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
+              ggtitle("Residual Adjustment Component")+
+              xlab("Longitude")+
+              ylab("Latitude"),
+            ggplot(data=Xpixa)+
+              geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=step1_estimated_blurred_map))+
+              scale_fill_gradientn(colors=ibex_palette$hex[-c(1,nrow(ibex_palette))],
+                                   name="ENAs/sec",
+                                   limits = c(step3min,step3max),
+                                   breaks=c(step3breaksmin, step3breaksmid, step3breaksmax))+
+              theme(legend.position="bottom",
+                    plot.title = element_text(hjust = 0.5))+
+              scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
+              scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
+              ggtitle("Residual-Adjusted Blurred Sky Map")+
+              xlab("Longitude")+
+              ylab("Latitude"),nrow=1)
+  print("Save Fig 4")
+  ggsave("fig4.pdf", plot=fig4, width=12, height=4)
+  
 }
 
 
@@ -689,31 +709,33 @@ psibreaks <- c(ceiling(min(Xpixa$estimated_blurred2_map)*1000)/1000,
                  0,
                  floor(max(Xpixa$estimated_blurred2_map)*1000)/1000)
 
-## Figure 6
-grid.arrange(
-  arrangeGrob(
-    ggplot(data=Xpixa)+
-      geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=estimated_blurred2_map)) +
-      scale_fill_gradient2(name=expression(hat(psi)), breaks = psibreaks)+
-      theme(legend.position="right")+
-      scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
-      scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
-      xlab("Longitude") + ylab("Latitude")),
-    ggplot(data=Xpixa)+
-      geom_point(aes(x=K_delta_dot, y=estimated_blurred2_map), color=I("black"), fill=I("darkgrey"), shape=I(21)) +
-      geom_abline(color=I("red"))+
-      xlab(expression(K*dot(delta)))+
-      ylab(expression(hat(psi)))+
-      xlim(c(stage2sharpeningminx,stage2sharpeningmaxx)),
-    ##
-    ggplot(data=Xpixa)+
-      geom_point(aes(x=K_delta_hat, y=estimated_blurred2_map), color=I("black"), fill=I("darkgrey"), shape=I(21)) +
-      geom_abline(color=I("red"))+
-      xlab(expression(K*hat(delta)))+
-      ylab(expression(hat(psi)))+
-      xlim(c(stage2sharpeningminx,stage2sharpeningmaxx)),
-  nrow=1, widths = c(2.5,2,2))
 
+## Save Figure 6
+fig6 <- arrangeGrob(
+          arrangeGrob(
+            ggplot(data=Xpixa)+
+              geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=estimated_blurred2_map)) +
+              scale_fill_gradient2(name=expression(hat(psi)), breaks = psibreaks)+
+              theme(legend.position="right")+
+              scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
+              scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
+              xlab("Longitude") + ylab("Latitude")),
+            ggplot(data=Xpixa)+
+              geom_point(aes(x=K_delta_dot, y=estimated_blurred2_map), color=I("black"), fill=I("darkgrey"), shape=I(21)) +
+              geom_abline(color=I("red"))+
+              xlab(expression(K*dot(delta)))+
+              ylab(expression(hat(psi)))+
+              xlim(c(stage2sharpeningminx,stage2sharpeningmaxx)),
+            ##
+            ggplot(data=Xpixa)+
+              geom_point(aes(x=K_delta_hat, y=estimated_blurred2_map), color=I("black"), fill=I("darkgrey"), shape=I(21)) +
+              geom_abline(color=I("red"))+
+              xlab(expression(K*hat(delta)))+
+              ylab(expression(hat(psi)))+
+              xlim(c(stage2sharpeningminx,stage2sharpeningmaxx)),
+          nrow=1, widths = c(2.5,2,2))
+print("Save Fig 6")
+ggsave("fig6.pdf",plot=fig6, width=15, height=4)
 
 
 
@@ -740,61 +762,63 @@ stage2max <- max(c(Xpixa$init_step1_estimated_blurred_map, Xpixa$estimated_blurr
 stage2mid <- round((stage2max - stage2min)/2 + stage2min,2)
 
 ## Figure 7
-grid.arrange(
-  ggplot(data=Xpixa)+
-    geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=step1_estimated_blurred_map))+
-    scale_fill_gradientn(colors=ibex_palette$hex[-c(1,nrow(ibex_palette))],
-                         name="ENAs/sec", 
-                         limits=c(stage2min, stage2max),
-                         breaks = c(ceiling(stage2min*100)/100, stage2mid, floor(stage2max*100)/100))+
-    ylab("Latitude")+
-    xlab("Longitude")+
-    scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
-    scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
-    ggtitle("Residual-Adjusted Blurred Sky Map")+
-    theme(legend.position = "bottom",
-          plot.title = element_text(hjust = 0.5)),
-  ####
-  ggplot(data=Xpixa)+
-    geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=delta_hat))+
-    scale_fill_gradient2(name="",
-                         breaks=c(round(min(Xpixa$delta_hat*.95),3),
-                                                               0,
-                                                               round(max(Xpixa$delta_hat*.95),3)))+
-    ggtitle("Sharpening Map")+
-    ylab("Latitude")+
-    xlab("Longitude")+
-    scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
-    scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
-    theme(legend.position = "bottom",
-          plot.title = element_text(hjust = 0.5)),
-  ####
-  ggplot(data=Xpixa)+
-    geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=estimated_unblurred_map))+
-    scale_fill_gradientn(colors=ibex_palette$hex[-c(1,nrow(ibex_palette))],
-                         name="ENAs/sec", 
-                         limits=c(stage2min, stage2max),
-                         breaks = c(ceiling(stage2min*100)/100, stage2mid, floor(stage2max*100)/100))+
-    ylab("Latitude")+
-    xlab("Longitude")+
-    scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
-    scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
-    ggtitle("Unblurred Sky Map")+
-    theme(legend.position = "bottom",
-          plot.title = element_text(hjust = 0.5)),
-  ####
-  ggplot(data=Xpixa)+
-    geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=estimated_blurred_map))+
-    scale_fill_gradientn(colors=ibex_palette$hex[-c(1,nrow(ibex_palette))],
-                         name="ENAs/sec", 
-                         limits=c(stage2min, stage2max),
-                         breaks = c(ceiling(stage2min*100)/100, stage2mid, floor(stage2max*100)/100))+
-    ylab("Latitude")+
-    xlab("Longitude")+
-    scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
-    scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
-    ggtitle("Blurred Sky Map")+
-    theme(legend.position = "bottom",
-          plot.title = element_text(hjust = 0.5)),nrow=1)
+fig7 <- arrangeGrob(
+          ggplot(data=Xpixa)+
+            geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=step1_estimated_blurred_map))+
+            scale_fill_gradientn(colors=ibex_palette$hex[-c(1,nrow(ibex_palette))],
+                                 name="ENAs/sec", 
+                                 limits=c(stage2min, stage2max),
+                                 breaks = c(ceiling(stage2min*100)/100, stage2mid, floor(stage2max*100)/100))+
+            ylab("Latitude")+
+            xlab("Longitude")+
+            scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
+            scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
+            ggtitle("Residual-Adjusted Blurred Sky Map")+
+            theme(legend.position = "bottom",
+                  plot.title = element_text(hjust = 0.5)),
+          ####
+          ggplot(data=Xpixa)+
+            geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=delta_hat))+
+            scale_fill_gradient2(name="",
+                                 breaks=c(round(min(Xpixa$delta_hat*.95),3),
+                                                                       0,
+                                                                       round(max(Xpixa$delta_hat*.95),3)))+
+            ggtitle("Sharpening Map")+
+            ylab("Latitude")+
+            xlab("Longitude")+
+            scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
+            scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
+            theme(legend.position = "bottom",
+                  plot.title = element_text(hjust = 0.5)),
+          ####
+          ggplot(data=Xpixa)+
+            geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=estimated_unblurred_map))+
+            scale_fill_gradientn(colors=ibex_palette$hex[-c(1,nrow(ibex_palette))],
+                                 name="ENAs/sec", 
+                                 limits=c(stage2min, stage2max),
+                                 breaks = c(ceiling(stage2min*100)/100, stage2mid, floor(stage2max*100)/100))+
+            ylab("Latitude")+
+            xlab("Longitude")+
+            scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
+            scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
+            ggtitle("Unblurred Sky Map")+
+            theme(legend.position = "bottom",
+                  plot.title = element_text(hjust = 0.5)),
+          ####
+          ggplot(data=Xpixa)+
+            geom_raster(aes(x=ecliptic_lon_center, y=ecliptic_lat, fill=estimated_blurred_map))+
+            scale_fill_gradientn(colors=ibex_palette$hex[-c(1,nrow(ibex_palette))],
+                                 name="ENAs/sec", 
+                                 limits=c(stage2min, stage2max),
+                                 breaks = c(ceiling(stage2min*100)/100, stage2mid, floor(stage2max*100)/100))+
+            ylab("Latitude")+
+            xlab("Longitude")+
+            scale_x_reverse(expand = c(.0,.0), breaks = new_360, labels = orig_360) +
+            scale_y_continuous(expand = c(.0,.0), breaks = seq(-45,45,45)) +
+            ggtitle("Blurred Sky Map")+
+            theme(legend.position = "bottom",
+                  plot.title = element_text(hjust = 0.5)),nrow=1)
+print("Save Fig 7")
+ggsave("fig7.pdf",plot=fig7, width=16, height=4)
 
 
