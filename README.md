@@ -73,7 +73,7 @@ There are **5** data products in **data_illustration.RDS**.
 
 There are **2** data products in **data_results.RDS**.
 
-**ibex_data** is an 11 column data frame:
+**ibex_data** is an 11 column data frame containing the binned direct event data for all ESA 4 "A" maps between 2010 and 2021:
 - esa: is the energy step for the IBEX data. Only ESA 4 is provided
 - map: is the 6-month map id (e.g., "2013A"). Only "A" maps are provided
 - ecliptic_lon: is the ecliptic longitude (between 0 and 360)
@@ -84,7 +84,7 @@ There are **2** data products in **data_results.RDS**.
 - time: is the exposure time (in seconds)
 - background: is the background rate (background particles per second)
 
-**real_sky_maps** is an 8 column data frame:
+**real_sky_maps** is an 8 column data frame containing the ISOC and Theseus sky map estimates with UQ for all ESA 4 "A" maps between 2010 and 2021:
 - esa: is the energy step for the IBEX data. Only ESA 4 is provided
 - map: is the 6-month map id (e.g., "2013A"). Only "A" maps are provided
 - ecliptic_lon: is the ecliptic longitude (between 0 and 360)
