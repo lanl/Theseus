@@ -29,7 +29,7 @@ NOTE: Anyone wishing to use the binned direct event data for **space science** (
 
 ## Instructions for use
 
-After R is installed, run the script **theseus.R**. 
+After R is installed, run **theseus_illustration.R** to reproduce Figures 2, 3, 4, 6, and 7, or run **theseus_results.R** to reproduce Figures 13 and 14. 
 
 
 ## Data Details
