@@ -100,7 +100,7 @@ If you use the Theseus in your research work, please cite the following paper:
 D Osthus, BP Weaver, LJ Beesley, KR Moran, MA Stricklin, EJ Zirnstein, PH Janzen, and DB Reisenfeld. Towards Improved Heliosphere Sky Map Estimation with Theseus. [Under consideration at Technometrics](https://arxiv.org/pdf/2210.12005.pdf).
 
 ---
-Copyright 2023 for **CO4627**
+Copyright 2023 for **C4627**
 
 This program is Open-Source under the BSD-3 License.
  
