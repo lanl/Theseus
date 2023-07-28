@@ -40,7 +40,7 @@ Users may need to setwd('Path/to/Theseus/Directory/') in line 34 of both **.R** 
 
 There are **5** data products in **data_illustration.RDS**.
 
-**Xobs** is an 11 column data frame:
+**Xobs** is an 11 column data frame containing the simulated binned direct event data:
 - obs_id: is a unique label for the binned direct event data, from 1 to the number of rows of Xobs
 - ecliptic_lon: is the ecliptic longitude (between 0 and 360)
 - ecliptic_lat: is the ecliptic latitude (between -90 and 90)
@@ -51,13 +51,13 @@ There are **5** data products in **data_illustration.RDS**.
 - time: is the exposure time (in seconds)
 - background: is the background rate (background particles per second)
 
-**Xpix** is an 8 column data frame:
+**Xpix** is an 8 column data frame containing the sky map pixel locations and other relevant pixel information:
 - pix_id: is a unique label for each pixel, from 1 to the number of rows of Xpix (for a 2 degree map, that's 16,200)
 - ecliptic_lon: is the ecliptic longitude (between 0 and 360)
 - ecliptic_lat: is the ecliptic latitude (between -90 and 90)
 - ecliptic_lon_center: is the ecliiptic longitude in "nose centered" frame and is used for plotting purposes
 - x, y, and z: are the sperical coordinates for the ecliptic longitude and latitude and are used for PPR and GAM regression
-- wt_pix: is proportional to the size of the pixel (area on a unit sphere) where larger pixels are near ecliptic_latitude 0 and smaller pixels are near ecliptic latitudes -90 and 90
+- wt_pix: is proportional to the size of the pixel (area on a unit sphere) where larger pixels are near ecliptic_latitude 0 and smaller pixels are near ecliptic latitudes -90 and 90. This is used in `glmnet()`.
 
 **Xpsf** is a nrow(Xobs) by nrow(Xpix) sparse matrix where each entry is non-neagative and each row sums to 1. It is used to relate the unblurred sky map to the blurred binned direct events
 
