@@ -57,13 +57,13 @@ There are **5** data products in **data_illustration.RDS**.
 - ecliptic_lat: is the ecliptic latitude (between -90 and 90)
 - ecliptic_lon_center: is the ecliiptic longitude in "nose centered" frame and is used for plotting purposes
 - x, y, and z: are the sperical coordinates for the ecliptic longitude and latitude and are used for PPR and GAM regression
-- wt_pix: is proportional to the size of the pixel (area on a unit sphere) where larger pixels are near ecliptic_latitude 0 and smaller pixels are near ecliptic latitudes -90 and 90. This is used in `glmnet()`.
+- wt_pix: is proportional to the size of the pixel (area on a unit sphere) where larger pixels are near ecliptic_latitude 0 and smaller pixels are near ecliptic latitudes -90 and 90 and is used in `glmnet()`
 
-**Xpsf** is a nrow(Xobs) by nrow(Xpix) sparse matrix where each entry is non-neagative and each row sums to 1. It is used to relate the unblurred sky map to the blurred binned direct events
+**Xpsf** is a nrow(Xobs) by nrow(Xpix) sparse matrix where each entry is non-neagative and each row sums to 1. It is used to relate the unblurred sky map to the blurred binned direct events.
 
-**KK** is an nrow(Xpix) by nrow(Xpix) sparse matrix where each entry is non-negative and each row sums to 1. It is used to relate the unblurred sky map to the blurred sky map
+**KK** is an nrow(Xpix) by nrow(Xpix) sparse matrix where each entry is non-negative and each row sums to 1. It is used to relate the unblurred sky map to the blurred sky map.
 
-**ibex_palette** is a 4 column data frame:
+**ibex_palette** is a 4 column data frame containing the pixel color information to plot sky maps:
 - red: red numeric value
 - green: green numeric value
 - blue: blue numeric value
