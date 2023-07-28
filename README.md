@@ -31,6 +31,8 @@ NOTE: Anyone wishing to use the binned direct event data for **space science** (
 
 After R is installed, run **theseus_illustration.R** to reproduce Figures 2, 3, 4, 6, and 7, or run **theseus_results.R** to reproduce Figures 13 and 14. 
 
+Users may need to setwd('Path/to/Theseus/Directory/') in line 34 of both .R files.
+
 
 ## Data Details
 
