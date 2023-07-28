@@ -31,7 +31,7 @@ theme_set(theme_bw())
 
 
 ###########################
-# setwd('Path/to/Theseus/Directory/')
+# setwd("/Users/dosthus/Documents/ibex/theseus/manuscript/Technometrics/MWE/")
 
 ###########################
 ## source in the functions 

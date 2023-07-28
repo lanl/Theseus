@@ -31,7 +31,7 @@ theme_set(theme_bw())
 
 
 ###########################
-setwd("/Users/dosthus/Documents/ibex/theseus/manuscript/Technometrics/MWE/")
+# setwd("/Users/dosthus/Documents/ibex/theseus/manuscript/Technometrics/MWE/")
 
 ## define terms for proper coordinate plotting
 noselongitude <- 265
@@ -77,8 +77,11 @@ fig13theseus <- ggplot(data=subset(df, method == "theseus" & type == "mean"))+
                     theme(legend.position="bottom",
                           plot.title = element_text(hjust = 0.5))
 
-## Figure 13
-grid.arrange(fig13isoc, fig13theseus, nrow=1)
+## Save Figure 13
+fig13 <- arrangeGrob(fig13isoc, fig13theseus, nrow=1)
+print("Save Fig 13")
+ggsave(filename = "fig13.pdf", plot = fig13, width = 10, height = 12)           
+
 
 
 
@@ -120,7 +123,9 @@ fig14theseus <- ggplot(data=subset(df, method == "theseus" & type == "ci"))+
                   theme(legend.position="bottom",
                         plot.title = element_text(hjust = 0.5))
 
-## Figure 14
-grid.arrange(fig14isoc, fig14theseus, nrow=1)
+## Save Figure 14
+fig14 <- arrangeGrob(fig14isoc, fig14theseus, nrow=1)
+print("Save Fig 14")
+ggsave(filename = "fig14.pdf", plot = fig14, width = 10, height = 12)           
 
 
